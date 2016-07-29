@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"{% if perms.assets.edit_workflow %} data-eing{% endif %}>
+	<head>
+		<title>{{ meta_title }}</title>
+		<link rel="shortcut icon" href="{{STATIC_URL}}img/favicon.ico" type="image/x-icon" />
+		<meta name="description" content="{{meta_description}}" />
+		<meta name="keywords" content="{{meta_keywords}}">
+
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        {% block theme_css %}{% endblock theme_css %}
+		{% block additional_css %}{% endblock additional_css %}
+
+		{% block head %}
+			{% if head_tag %}
+			{% autoescape off %}{{head_tag}}{% endautoescape %}
+			{% endif %}
+		{% endblock head %}
+	</head>
+	<body {% block bodyid %}{% endblock bodyid %} {% block bodyclass %}{% endblock bodyclass %}>
+    {% if not login %}
+    <form action="#" method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+		<input id="login" name="login" type="hidden" value="login"/>
+        <input type="submit" class="btn btn-lg" value="LOG IN"/>
+    </form>
+    {% endif %}
+    {% if show %}
+        HELLO AND WELCOME. PLEASE SELECT ITEMS AND THEN CLICK BUY
+        <form action="#" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+            <input type="checkbox" name="item_1" value="apple">Apples<br>
+            <input type="checkbox" name="item_2" value="orange"> Oranges<br>
+            <input type="checkbox" name="item_3" value="pear"> Pears<br>
+            <input type="checkbox" name="item_4" value="peach"> Peaches<br>
+            <input type="hidden" name="buy" value="buy"> Peaches<br>
+            <input type="submit" class="btn btn-lg" value="BUY"/>
+        </form>
+    {% endif %}
+
+
+		<div id="content">
+
+			{% block content %}{% endblock content %}
+
+		</div>
+
+		{% block added_script %}{% endblock added_script %}
+	</body>
+</html>
